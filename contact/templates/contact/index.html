@@ -1,68 +1,79 @@
-{% extends "global/base.html" %} {% block content %}
+{% extends "global/base.html" %}
+
+{% block content %}
+{% if contacts %}
 <main class="content">
-  <div class="responsive-table">
-    <table class="contacts-table">
-      <caption class="table-caption">
-        Contacs
-      </caption>
+    <div class="responsive-table">
+      <table class="contacts-table">
+        <caption class="table-caption">
+          Contacs
+        </caption>
 
-      <thead>
-        <tr class="table-row table-row-header">
-          <th class="table-header">ID</th>
-          <th class="table-header">First Name</th>
-          <th class="table-header">Last Name</th>
-          <th class="table-header">phone</th>
-          <th class="table-header">Email</th>
-        </tr>
-      </thead>
+        <thead>
+          <tr class="table-row table-row-header">
+            <th class="table-header">ID</th>
+            <th class="table-header">First Name</th>
+            <th class="table-header">Last Name</th>
+            <th class="table-header">phone</th>
+            <th class="table-header">Email</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {% for contact in contacts %}
-        <tr class="table-row">
-          <td class="table-cel">
-            <a
-              href="{% url "contact:contact" contact.id %}"
-              class="table-link"
-            >
-              {{ contact.id }}
-            </a>
-          </td>
-          <td class="table-cel">
-            <a
-              href="{% url "contact:contact" contact.id %}"
-              class="table-link"
-            >
-              {{ contact.first_name }}
-            </a>
-          </td>
-          <td class="table-cel">
-            <a
-              href="{% url "contact:contact" contact.id %}"
-              class="table-link"
-            >
-              {{ contact.last_name }}
-            </a>
-          </td>
-          <td class="table-cel">
-            <a
-              href="{% url "contact:contact" contact.id %}"
-              class="table-link"
-            >
-              {{ contact.phone }}
-            </a>
-          </td>
-          <td class="table-cel">
-            <a
-              href="{% url "contact:contact" contact.id %}"
-              class="table-link"
-            >
-              {{ contact.email }}
-            </a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        <tbody>
+          {% for contact in contacts %}
+          <tr class="table-row">
+            <td class="table-cel">
+              <a
+                href="{% url "contact:contact" contact.id %}"
+                class="table-link"
+              >
+                {{ contact.id }}
+              </a>
+            </td>
+            <td class="table-cel">
+              <a
+                href="{% url "contact:contact" contact.id %}"
+                class="table-link"
+              >
+                {{ contact.first_name }}
+              </a>
+            </td>
+            <td class="table-cel">
+              <a
+                href="{% url "contact:contact" contact.id %}"
+                class="table-link"
+              >
+                {{ contact.last_name }}
+              </a>
+            </td>
+            <td class="table-cel">
+              <a
+                href="{% url "contact:contact" contact.id %}"
+                class="table-link"
+              >
+                {{ contact.phone }}
+              </a>
+            </td>
+            <td class="table-cel">
+              <a
+                href="{% url "contact:contact" contact.id %}"
+                class="table-link"
+              >
+                {{ contact.email }}
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+{% else %}
+  <div class="single-contact ">
+    <h1 class="sigle-contact-name">
+      Nenhum contato encontrado.
+    </h1>
   </div>
-</main>
+{% endif %}
 {% endblock content %}
