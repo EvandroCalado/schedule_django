@@ -1,6 +1,8 @@
 from typing import Any
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from . import models
 
 
@@ -32,7 +34,7 @@ class ContactForm(forms.ModelForm):
 
         if first_name == last_name:
             msg = ValidationError(
-                'last name não pode ser igual ao first name.',
+                'Last name cannot be the same as first name.',
                 code='invalid',
             )
             self.add_error('last_name', msg)
@@ -46,9 +48,40 @@ class ContactForm(forms.ModelForm):
             self.add_error(
                 'first_name',
                 ValidationError(
-                    'Campo deve ter ao menos 4 caracteres.',
+                    'Field must have at least 4 characters.',
                     code='invalid'
                 )
             )
 
         return first_name
+
+
+class RegisterForm(UserCreationForm):
+    first_name = forms.CharField(required=True, min_length=3,)
+    last_name = forms.CharField(required=True, min_length=3,)
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'username',
+            'password1',
+            'password2',
+        )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        if User.objects.filter(email=email).exists():
+            self.add_error(
+                'email',
+                ValidationError(
+                    'This email is already registered in the database.',
+                    code='invalid'
+                )
+            )
+
+        return email
